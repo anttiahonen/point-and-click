@@ -1,0 +1,72 @@
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="shortcut icon" href="Pics/dm-favicon.ico" />
+		<link rel="stylesheet" href="CSS/game.css" />
+		<script type="text/javascript" src="scripts/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="scripts/jquery.waitforimages.js"></script>
+		<script type="text/javascript" src="scripts/soundmanager2.js"></script>
+		<script type="text/javascript" src="scripts/game.js"></script>		
+		<meta name="description" content="Tietoa superhienosta youtube-videokanavasta" />
+		<meta name="author" content="Antti Ahonen, 79109P" />
+		<meta name="keywords" content="HTML5, CSS, RAP, YOUTUBE, DEMONMAZIK" />
+        	<meta name="robots" content="index">
+		<title>Demonmazik produktionz</title>	
+	</head>
+
+<body>
+	<div id="instructions">
+		<div id="title">Point & Click game</div>
+		<div id="playButton"><div id="load"></div><div id="play">CLICK TO PLAY</div></div>
+		<div id="instructionText"><p>* Move - W,A,S,D</p><p>* Click on the screen to collect and use things</p><p>* To select/deselect item, click it on the inventory</p><p>* To combine items, click item1 and then item2 and see the magic</p></div>
+	</div>
+	<section id="game">
+		<canvas id="canvas"></canvas>
+		<section id="inventory">
+		</section>
+		<section id="zoomBox">
+			<img src="" width="400" height="400" id="zoomPic"/>
+			<img src="images/right.png" width="50" height="50" id="right" />
+		</section>
+		<section id="messages"></section>
+	</section>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		var width = parseInt($('#play').css('width'))-10;
+		var loaded = 0;
+		var imagesReady = false;
+		$('#playButton').click(function(){
+			load();
+		})
+		
+		var load = function(){
+		
+			$('#play').slideUp();
+			$('#load').slideDown();
+			css = width * loaded
+			Math.round(css);
+			
+			if (soundManager.getSoundById('musa').readyState != 3){
+
+				$('#load').css('width', css+'px');
+				loaded += 0.05;
+				if (loaded >= 1){
+					loaded = 0;
+				}
+				setTimeout(load, 50);
+			}
+			
+			else{
+				$('#game').fadeIn();
+				$('#inventory').slideDown();
+				$('#instructions').fadeOut();
+				soundManager.play('pickUp');
+				setTimeout(function(){soundManager.play('musa');}, 100);
+			}
+			
+		}
+	});
+	</script>
+</body>
+</html>
